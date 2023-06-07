@@ -744,7 +744,7 @@ defmodule Teiserver.User do
   def add_roles(userid, roles) when is_integer(userid),
     do: add_roles(get_user_by_id(userid), roles)
 
-  def add_roles(user, roles) do
+  def add_roles(user, roles) when user !== nil do
     new_roles = Enum.uniq(roles ++ user.roles)
     update_user(%{user | roles: new_roles}, persist: true)
   end

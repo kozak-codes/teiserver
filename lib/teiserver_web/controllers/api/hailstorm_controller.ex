@@ -1,5 +1,6 @@
 defmodule TeiserverWeb.API.HailstormController do
   use CentralWeb, :controller
+  require Logger
   alias Teiserver.Config
   alias Teiserver.{Account, User}
 
@@ -32,8 +33,9 @@ defmodule TeiserverWeb.API.HailstormController do
               db_user = Account.get_user!(nil, search: [email: email])
               Central.Account.update_user(db_user, params["permissions"] || [], :permissions)
 
+              Logger.info("Created user: #{db_user.id}")
               # Specific updates
-              User.add_roles(db_user.id, params["roles"])
+              User.add_roles(db_user, params["roles"])
 
               %{userid: db_user.id}
 
