@@ -737,6 +737,7 @@ defmodule Teiserver.User do
   @spec add_roles(T.user() | T.userid(), [String.t()]) :: nil | T.user()
   def add_roles(nil, _), do: nil
   def add_roles(_, []), do: nil
+  def add_roles(_, nil), do: nil
 
   def add_roles(userid, roles) when is_integer(userid),
     do: add_roles(get_user_by_id(userid), roles)
@@ -853,7 +854,7 @@ defmodule Teiserver.User do
     cond do
       user.smurf_of_id != nil ->
         {:error,
-         "Smurf/alt account detected. We do not allow smurfing. Please login as your main account. Repeatedly creating smurfs can result in suspension or bans."}
+         "Smurf/alt account detected. We do not allow smurfing. Please login as your main account. Repeatedly creating smurfs can result in suspension or bans. If you think this account was flagged incorrectly please open a ticket on our discord and explain why."}
 
       token.expires != nil and Timex.compare(token.expires, Timex.now()) == -1 ->
         {:error, "Token expired"}
@@ -923,7 +924,7 @@ defmodule Teiserver.User do
         cond do
           user.smurf_of_id != nil ->
             {:error,
-             "Smurf/alt account detected. We do not allow smurfing. Please login as your main account. Repeatedly creating smurfs can result in suspension or bans."}
+             "Smurf/alt account detected. We do not allow smurfing. Please login as your main account. Repeatedly creating smurfs can result in suspension or bans. If you think this account was flagged incorrectly please open a ticket on our discord and explain why."}
 
           not is_bot?(user) and login_flood_check(user.id) == :block ->
             {:error, "Flood protection - Please wait 20 seconds and try again"}
@@ -1003,7 +1004,7 @@ defmodule Teiserver.User do
         cond do
           user.smurf_of_id != nil ->
             {:error,
-             "Smurf/alt account detected. We do not allow smurfing. Please login as your main account. Repeatedly creating smurfs can result in suspension or bans."}
+             "Smurf/alt account detected. We do not allow smurfing. Please login as your main account. Repeatedly creating smurfs can result in suspension or bans. If you think this account was flagged incorrectly please open a ticket on our discord and explain why."}
 
           user.name != username ->
             {:error, "Username is case sensitive, try '#{user.name}'"}
