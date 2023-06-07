@@ -194,9 +194,6 @@ defmodule Teiserver.Account.UserCache do
     |> Map.take(User.keys())
     |> Map.merge(User.default_data())
     |> Map.merge(data)
-
-
-
   end
 
   @doc """
